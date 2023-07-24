@@ -31,7 +31,9 @@
 - [Youtube Video Part-1: App Induction, Welcome UI](https://youtu.be/1oV3BCOmOyE)
 - [Youtube Video Part-2: Sign Up, Sign In, Select Location & Verification ](https://youtu.be/0A9q0olE99w)
 - [Youtube Video Part-3: Home Tab, Search Shop & Product Detail UI](https://youtu.be/kqHjP2NVttQ)
-- [Youtube Video Part-4: Explore, Search, Filter & List UI & ](https://youtu.be/gW33JfWXMSI)
+- [Youtube Video Part-4: Explore, Search, Filter & List UI ](https://youtu.be/gW33JfWXMSI)
+- [Youtube Video Part-5: My Cart, Checkout, Favorite UI  ](https://youtu.be/6vQfWiz3Uwc)
+- [Youtube Video Part-6: Account, Order Accept, Order Place Error UI  ](https://youtu.be/IdngLomODh4)
 
 UI UX App Design by: [Afsar Hossen](https://dribbble.com/imshuvo97)
 
