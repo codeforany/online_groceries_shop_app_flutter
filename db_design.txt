@@ -1,0 +1,165 @@
+1)User Detail:
+user_id
+username
+name
+email
+mobile
+mobile_code
+password
+auth_token
+device_token
+reset_code
+status : 1)active, 2) deleted
+created_date
+modify_date
+
+2)Category Detail:
+cat_id
+cat_name
+image
+color
+status : 1)active, 2) deleted
+created_date
+modify_date
+
+3)Product Brand Detail:
+brand_id
+brand_name
+status : 1)active, 2) deleted
+created_date
+modify_date
+
+4)Type Detail:
+type_id
+type_name
+image
+color
+status : 1)active, 2) deleted
+created_date
+modify_date
+
+5)Product Detail:
+prod_id
+cat_id
+brand_id
+type_id
+name
+detail
+unit_name
+unit_value
+price
+status : 1)active, 2) deleted
+created_date
+modify_date
+
+6)Nutrition Detail:
+nutrition_id
+prod_id
+nutrition_name
+nutrition_value
+status : 1)active, 2) deleted
+created_date
+modify_date
+
+7)Image Detail:
+img_id
+prod_id
+image
+status
+created_date
+modify_date
+
+8)Review Detail:
+review_id
+prod_id
+user_id
+rate
+message
+status
+created_date
+modify_date
+
+9)Favorite Details
+fav_id
+prod_id
+user_id
+status
+created_date
+modify_date
+
+10)Cart Detail:
+cart_id
+user_id
+prod_id
+qty
+status
+created_date
+modify_date
+
+11)Order Detail:
+order_id
+cart_id
+user_id
+address_id
+total_price
+user_pay_price
+discount_price
+deliver_price
+promo_code_id
+deliver_type (1: Deliver, 2: Collection)
+payment_type  (1: COD, 2: Online Card)
+payment_status (1: waiting, 2: done, 3: fail, 4: refund)
+order_status (1: new, 2: order accept, 3: order delivered, 4: cancel, 5: order declined )
+status
+created_date
+modify_date
+
+12)Order Payment Detail:
+transaction_id
+order_id
+transaction_payload
+status
+created_date
+modify_date
+
+13)Address Detail:
+address_id
+name
+phone
+address
+city
+state
+postal_code
+is_default
+status
+created_date
+modify_date
+
+14) Offer Detail:
+offer_id
+prod_id
+price
+start_date
+end_date
+status
+created_date
+modify_date
+
+15) PromoCode Detail:
+promo_code_id
+code
+offer_price
+start_date
+end_date
+status
+created_date
+modify_date
+
+16) Notification Details:
+notification_id
+title
+message
+notification_type
+status
+created_date
+modify_date
