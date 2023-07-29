@@ -6,12 +6,14 @@ class Dropdown extends StatelessWidget {
   final String title;
   final String placeholder;
   final List valueList;
+  final Object? selectValue;
   final Function(Object?) didChange;
   const Dropdown(
       {super.key,
       required this.title,
       required this.placeholder,
       required this.valueList,
+      this.selectValue,
       required this.didChange});
 
   @override
@@ -36,6 +38,7 @@ class Dropdown extends StatelessWidget {
                   Icons.expand_more,
                   color: TColor.textTittle,
                 ),
+                value: selectValue,
                 hint: Text(
                   placeholder,
                   style: TextStyle(

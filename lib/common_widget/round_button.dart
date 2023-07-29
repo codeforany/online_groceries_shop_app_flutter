@@ -4,8 +4,9 @@ import '../common/color_extension.dart';
 
 class RoundButton extends StatelessWidget {
   final String title;
+  final Color? bgColor;
   final VoidCallback onPressed;
-  const RoundButton({super.key, required this.title, required this.onPressed});
+  const RoundButton({super.key, required this.title, this.bgColor , required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class RoundButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       minWidth: double.maxFinite,
       elevation: 0.1,
-      color: TColor.primary,
+      color: bgColor ?? TColor.primary,
       child: Text(
         title,
         style: const TextStyle(

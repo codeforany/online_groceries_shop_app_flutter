@@ -34,6 +34,7 @@
 - [Youtube Video Part-4: Explore, Search, Filter & List UI ](https://youtu.be/gW33JfWXMSI)
 - [Youtube Video Part-5: My Cart, Checkout, Favorite UI  ](https://youtu.be/6vQfWiz3Uwc)
 - [Youtube Video Part-6: Account, Order Accept, Order Place Error UI  ](https://youtu.be/IdngLomODh4)
+- [Youtube Video Part-7: GetX State Management, MVVM, Login & SignUp API Calling ](https://youtu.be/NoXzJfhX50I)
 
 - [Youtube Full Playlist: Online Grocery Shopping Node REST Api Playlist](https://www.youtube.com/playlist?list=PLzcRC7PA0xWQiIgIL526ZAxxVdSZMwx3l)
 

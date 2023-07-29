@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:online_groceries/view/home/home_view.dart';
 
 import '../../common/color_extension.dart';
@@ -22,6 +23,7 @@ class _MainTabViewState extends State<MainTabView>
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     controller = TabController(length: 5, vsync: this);
     controller?.addListener(() {
       selectTab = controller?.index ?? 0;

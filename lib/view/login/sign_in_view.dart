@@ -1,5 +1,8 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:online_groceries/view/login/login_view.dart';
+import 'package:online_groceries/view/login/sign_up_view.dart';
 import 'package:online_groceries/view/login/verification_view.dart';
 
 import '../../common/color_extension.dart';
@@ -51,7 +54,7 @@ class _SignInViewState extends State<SignInView> {
             child: Column(
               children: [
                 SizedBox(
-                  height: media.width * 1,
+                  height: media.width * 0.7,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -79,53 +82,79 @@ class _SignInViewState extends State<SignInView> {
                         controller: txtMobile,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          prefixIcon: GestureDetector(onTap: () async {
-                              final code = await countryPicker.showPicker(context: context);
+                          prefixIcon: GestureDetector(
+                            onTap: () async {
+                              final code = await countryPicker.showPicker(
+                                  context: context);
 
-                              if(code != null) {
+                              if (code != null) {
                                 countryCode = code;
-                                if(mounted) {
-                                  setState(() {
-                                    
-                                  });
+                                if (mounted) {
+                                  setState(() {});
                                 }
                               }
-                          }, child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(right: 8),
-                                width: 35,
-                                height: 35,
-                                child: countryCode.flagImage(),
-                              ),
-
-                              Text(
-                                  "${  countryCode.dialCode }",
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(right: 8),
+                                  width: 35,
+                                  height: 35,
+                                  child: countryCode.flagImage(),
+                                ),
+                                Text(
+                                  "${countryCode.dialCode}",
                                   style: TextStyle(
                                       color: TColor.primaryText,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600),
                                 ),
-
-                               const  SizedBox(width: 15,)
-                            ],
-                          ) ,),
+                                const SizedBox(
+                                  width: 15,
+                                )
+                              ],
+                            ),
+                          ),
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           hintText: "Mobile Number",
-                          hintStyle:
-                              TextStyle(color: TColor.placeholder, fontSize: 17),
+                          hintStyle: TextStyle(
+                              color: TColor.placeholder, fontSize: 17),
                         ),
                       ),
-
                       Container(
                         width: double.maxFinite,
                         height: 1,
-                        color: const Color(0xffE2E2E2) ,
+                        color: const Color(0xffE2E2E2),
                       )
                     ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: RoundButton(
+                    title: "Sign In With Email",
+                    bgColor: const Color(0xff5383EC),
+                    onPressed: () {
+                      Get.to( () => const LogInView()  );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: RoundButton(
+                    title: "Sign Up With Email",
+                    onPressed: () {
+                      Get.to(() =>  const SignUpView());
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -148,8 +177,10 @@ class _SignInViewState extends State<SignInView> {
                     icon: "assets/img/google_logo.png",
                     bgColor: Color(0xff5383EC),
                     onPressed: () {
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const VerificationView() ) );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const VerificationView()));
                     },
                   ),
                 ),

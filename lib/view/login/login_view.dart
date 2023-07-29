@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/view/login/sign_up_view.dart';
+import 'package:online_groceries/view_model/login_view_model.dart';
 import '../../common/color_extension.dart';
 import '../../common_widget/line_textfield.dart';
 import '../../common_widget/round_button.dart';
@@ -13,10 +15,7 @@ class LogInView extends StatefulWidget {
 }
 
 class _LogInViewState extends State<LogInView> {
-  TextEditingController txtEmail = TextEditingController();
-  TextEditingController txtPassword = TextEditingController();
-
-  bool isShow = false;
+  final loginVM = Get.put(LoginViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -84,27 +83,29 @@ class _LogInViewState extends State<LogInView> {
                   LineTextField(
                     title: "Email",
                     placeholder: "Enter your email address",
-                    controller: txtEmail,
+                    controller: loginVM.txtEmail.value,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(
                     height: media.width * 0.07,
                   ),
-                  LineTextField(
-                    title: "Password",
-                    placeholder: "Enter your password",
-                    controller: txtPassword,
-                    obscureText: isShow,
-                    right: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isShow = !isShow;
-                          });
-                        },
-                        icon: Icon(
-                          !isShow ? Icons.visibility_off : Icons.visibility,
-                          color: TColor.textTittle,
-                        )),
+                  Obx(
+                    () => LineTextField(
+                      title: "Password",
+                      placeholder: "Enter your password",
+                      controller: loginVM.txtPassword.value,
+                      obscureText: !loginVM.isShowPassword.value,
+                      right: IconButton(
+                          onPressed: () {
+                            loginVM.showPassword();
+                          },
+                          icon: Icon(
+                            !loginVM.isShowPassword.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: TColor.textTittle,
+                          )),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -127,13 +128,11 @@ class _LogInViewState extends State<LogInView> {
                   RoundButton(
                     title: "Log In",
                     onPressed: () {
-
-
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainTabView()));
+                      loginVM.serviceCallLogin();
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => const MainTabView()));
                     },
                   ),
                   SizedBox(
@@ -144,11 +143,10 @@ class _LogInViewState extends State<LogInView> {
                     children: [
                       TextButton(
                           onPressed: () {
-                             Navigator.push(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SignUpView()));
+                                    builder: (context) => const SignUpView()));
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

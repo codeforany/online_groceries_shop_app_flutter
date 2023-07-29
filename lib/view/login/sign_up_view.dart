@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../common/color_extension.dart';
 import '../../common_widget/line_textfield.dart';
 import '../../common_widget/round_button.dart';
+import '../../view_model/sign_up_view_model.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -12,11 +14,8 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  TextEditingController txtUsername = TextEditingController();
-  TextEditingController txtEmail = TextEditingController();
-  TextEditingController txtPassword = TextEditingController();
 
-  bool isShow = false;
+  final signUpVM = Get.put(SignUpViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class _SignUpViewState extends State<SignUpView> {
                   LineTextField(
                     title: "Username",
                     placeholder: "Enter your username",
-                    controller: txtUsername,
+                    controller: signUpVM.txtUsername.value,
                   ),
                   SizedBox(
                     height: media.width * 0.07,
@@ -92,28 +91,27 @@ class _SignUpViewState extends State<SignUpView> {
                   LineTextField(
                     title: "Email",
                     placeholder: "Enter your email address",
-                    controller: txtEmail,
+                    controller: signUpVM.txtEmail.value,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(
                     height: media.width * 0.07,
                   ),
+                  Obx(() => 
                   LineTextField(
                     title: "Password",
                     placeholder: "Enter your password",
-                    controller: txtPassword,
-                    obscureText: isShow,
+                    controller: signUpVM.txtPassword.value,
+                    obscureText: !signUpVM.isShowPassword.value,
                     right: IconButton(
                         onPressed: () {
-                          setState(() {
-                            isShow = !isShow;
-                          });
+                          signUpVM.showPassword();
                         },
                         icon: Icon(
-                          !isShow ? Icons.visibility_off : Icons.visibility,
+                           !signUpVM.isShowPassword.value ? Icons.visibility_off : Icons.visibility,
                           color: TColor.textTittle,
                         )),
-                  ),
+                  )),
                   SizedBox(
                     height: media.width * 0.04,
                   ),
@@ -155,10 +153,7 @@ class _SignUpViewState extends State<SignUpView> {
                   RoundButton(
                     title: "Sign Up",
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const SignInView()));
+                      signUpVM.serviceCallSignUp();
                     },
                   ),
                   SizedBox(

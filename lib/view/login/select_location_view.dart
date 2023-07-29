@@ -13,6 +13,8 @@ class SelectLocationView extends StatefulWidget {
 
 class _SelectLocationViewState extends State<SelectLocationView> {
   TextEditingController txtOTP = TextEditingController();
+  Object? selectZone;
+  Object? selectArea;
 
   @override
   Widget build(BuildContext context) {
@@ -74,19 +76,26 @@ class _SelectLocationViewState extends State<SelectLocationView> {
                     height: media.width * 0.1,
                   ),
 
-                  Dropdown(title: "Your Zone", placeholder: "Select your zone", valueList: const ["Zone 1", "Zone 2"], didChange: (sObj) {
-
+                  Dropdown(title: "Your Zone", placeholder: "Select your zone", valueList: const ["Zone 1", "Zone 2"],
+                  selectValue: selectZone, didChange: (sObj) {
+                     selectZone = sObj;
+                        setState(() {});
                   } ),
 
                   SizedBox(
                     height: media.width * 0.07,
                   ),
 
-                   Dropdown(
+                  Dropdown(
                       title: "Your Area",
                       placeholder: "Types of your area",
                       valueList: const ["Area 1", "Area 2"],
-                      didChange: (sObj) {}),
+                      selectValue: selectArea,
+                      didChange: (sObj) {
+
+                        selectArea = sObj;
+                        setState(() {});
+                  }),
 
                   SizedBox(
                     height: media.width * 0.1,
