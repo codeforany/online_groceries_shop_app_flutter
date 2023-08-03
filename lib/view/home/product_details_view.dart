@@ -1,17 +1,36 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/round_button.dart';
+import '../../model/offer_product_model.dart';
+import '../../view_model/product_detail_view_model.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({super.key});
+  final OfferProductModel pObj;
+  const ProductDetails({super.key, required this.pObj});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  late ProductDetailViewMode detailVM;
+
+  @override
+  void initState() {
+    super.initState();
+    detailVM = Get.put(ProductDetailViewMode(widget.pObj));
+  }
+
+  @override
+  void dispose() {
+    Get.delete<ProductDetailViewMode>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
@@ -31,8 +50,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                       color: const Color(0xffF2F3F2),
                       borderRadius: BorderRadius.circular(15)),
                   alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/img/apple_red.png",
+                  child: CachedNetworkImage(
+                    imageUrl: detailVM.pObj.image ?? "",
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                     width: media.width * 0.8,
                   ),
                 ),
@@ -73,25 +97,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Expanded(
                         child: Text(
-                          "Naturel Red Apple",
+                          detailVM.pObj.name ?? "",
                           style: TextStyle(
                               color: TColor.primaryText,
                               fontSize: 24,
                               fontWeight: FontWeight.w700),
                         ),
                       ),
-                      IconButton(
+                      Obx(
+                        () => IconButton(
                           onPressed: () {
+                            detailVM.serviceCallAddRemoveFavorite();
                           },
                           icon: Image.asset(
-                            "assets/img/fav.png",
+                            detailVM.isFav.value
+                                ? "assets/img/favorite.png"
+                                : "assets/img/fav.png",
                             width: 25,
                             height: 25,
-                          )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Text(
-                    "1kg, Price",
+                    "${detailVM.pObj.unitValue ?? ""}${detailVM.pObj.unitName ?? ""}, Price",
                     style: TextStyle(
                         color: TColor.secondaryText,
                         fontSize: 16,
@@ -103,7 +133,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Row(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          detailVM.addSubQTY(isAdd: false);
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Image.asset(
@@ -124,16 +156,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         alignment: Alignment.center,
-                        child: Text(
-                          "1",
-                          style: TextStyle(
-                              color: TColor.primaryText,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                        ),
+                        child: Obx(() => Text(
+                              detailVM.qty.value.toString(),
+                              style: TextStyle(
+                                  color: TColor.primaryText,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            )),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          detailVM.addSubQTY(isAdd: true);
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Image.asset(
@@ -144,12 +178,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        "\$4.99",
-                        style: TextStyle(
-                            color: TColor.primaryText,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700),
+                      Obx(
+                        () => Text(
+                          "\$${detailVM.getPrice()}",
+                          style: TextStyle(
+                              color: TColor.primaryText,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ],
                   ),
@@ -163,8 +199,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   const SizedBox(
                     height: 8,
                   ),
-
-                   Row(
+                  Row(
                     children: [
                       Expanded(
                         child: Text(
@@ -175,26 +210,32 @@ class _ProductDetailsState extends State<ProductDetails> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                      IconButton(
-                          onPressed: () {
-                           },
-                          icon: Image.asset(
-                            "assets/img/detail_open.png",
-                            width: 15,
-                            height: 15,
-                          )),
+                      Obx(
+                        () => IconButton(
+                            onPressed: () {
+                              detailVM.showDetail();
+                            },
+                            icon: Image.asset(
+                              detailVM.isShowDetail.value
+                                  ? "assets/img/detail_open.png"
+                                  : "assets/img/next.png",
+                              width: 15,
+                              height: 15,
+                              color: TColor.primaryText,
+                            )),
+                      ),
                     ],
                   ),
-
-                  Text(
-                    "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.",
-                    style: TextStyle(
-                        color: TColor.secondaryText,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500),
-                  ),
-
-                   const SizedBox(
+                  Obx(() => detailVM.isShowDetail.value
+                      ? Text(
+                          detailVM.pObj.detail ?? "",
+                          style: TextStyle(
+                              color: TColor.secondaryText,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        )
+                      : Container()),
+                  const SizedBox(
                     height: 15,
                   ),
                   const Divider(
@@ -215,36 +256,72 @@ class _ProductDetailsState extends State<ProductDetails> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
                         decoration: BoxDecoration(
-                          color: TColor.placeholder.withOpacity(0.5) ,
-                          
+                          color: TColor.placeholder.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          "100gr",
+                          detailVM.pObj.nutritionWeight ?? "100gr",
                           style: TextStyle(
                               color: TColor.secondaryText,
                               fontSize: 9,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-
-                      IconButton(
-                          onPressed: () {},
+                      Obx(
+                        () => IconButton(
+                          onPressed: () {
+                            detailVM.showNutrition();
+                          },
                           icon: Image.asset(
-                            "assets/img/next.png",
+                            detailVM.isShowNutrition.value
+                                ? "assets/img/detail_open.png"
+                                : "assets/img/next.png",
                             width: 15,
                             height: 15,
                             color: TColor.primaryText,
-                          )),
+                          ),
+                        ),
+                      )
                     ],
                   ),
-
-                   const SizedBox(
+                  Obx(() => detailVM.isShowNutrition.value
+                      ? ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            var nObj = detailVM.nutritionList[index];
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  nObj.nutritionName ?? "",
+                                  style: TextStyle(
+                                      color: TColor.secondaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  nObj.nutritionValue ?? "",
+                                  style: TextStyle(
+                                      color: TColor.primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            );
+                          },
+                          separatorBuilder: (context, index) => const Divider(
+                                color: Colors.black12,
+                              ),
+                          itemCount: detailVM.nutritionList.length)
+                      : Container()),
+                  const SizedBox(
                     height: 8,
                   ),
                   const Divider(
@@ -265,25 +342,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-
                       IgnorePointer(
                         ignoring: true,
                         child: RatingBar.builder(
-                         initialRating: 5,
-                         minRating: 1,
-                         direction: Axis.horizontal,
-                         allowHalfRating: true,
-                         itemCount: 5,
-                         itemSize: 15,
-                         itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                         itemBuilder: (context, _) => const Icon(
-                           Icons.star,
-                           color:  Color(0xffF3603F),
-                         ),
-                         onRatingUpdate: (rating) {
-                           print(rating);
-                         },
-                      ),
+                          initialRating: 5,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 15,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 1.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Color(0xffF3603F),
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
                       ),
                       IconButton(
                           onPressed: () {},
@@ -295,11 +372,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           )),
                     ],
                   ),
-
-                   const SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
-
                   RoundButton(
                     title: "Add To Basket",
                     onPressed: () {},

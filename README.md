@@ -35,6 +35,9 @@
 - [Youtube Video Part-5: My Cart, Checkout, Favorite UI  ](https://youtu.be/6vQfWiz3Uwc)
 - [Youtube Video Part-6: Account, Order Accept, Order Place Error UI  ](https://youtu.be/IdngLomODh4)
 - [Youtube Video Part-7: GetX State Management, MVVM, Login & SignUp API Calling ](https://youtu.be/NoXzJfhX50I)
+- [Youtube Video Part-8: GetX State Management, MVVM, Home Screen API Calling ](https://youtu.be/NoXzJfhX50I)
+- [Youtube Video Part-9: GetX State Management, MVVM, Product Detail Screen API Calling ](https://youtu.be/IVdjFNYT42k)
+- [Youtube Video Part-10: GetX State Management, MVVM, Product Detail Screen inside add remove favorite API Calling , Favorite Tab Screen API Calling ](https://youtu.be/LY4fe-P67_Y)
 
 - [Youtube Full Playlist: Online Grocery Shopping Node REST Api Playlist](https://www.youtube.com/playlist?list=PLzcRC7PA0xWQiIgIL526ZAxxVdSZMwx3l)
 

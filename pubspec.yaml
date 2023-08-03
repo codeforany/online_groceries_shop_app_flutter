@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.18.1
   flutter_timezone: ^1.0.6
   flutter_easyloading: ^3.0.5
+  cached_network_image: ^3.2.3
 
 dependency_overrides:
   intl: ^0.18.1

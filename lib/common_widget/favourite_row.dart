@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:online_groceries/model/offer_product_model.dart';
 
 import '../common/color_extension.dart';
 
 class FavoriteRow extends StatelessWidget {
-  final Map pObj;
+  final OfferProductModel pObj;
   final VoidCallback onPressed;
 
   const FavoriteRow(
@@ -22,9 +24,13 @@ class FavoriteRow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
               children: [
-                Image.asset(
-                  pObj["icon"],
-                  width: 60,
+                CachedNetworkImage(
+                  imageUrl: pObj.image ?? "",
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                   width: 60,
                   height: 60,
                   fit: BoxFit.contain,
                 ),
@@ -39,7 +45,7 @@ class FavoriteRow extends StatelessWidget {
                     children: [
 
                       Text(
-                        pObj["name"],
+                        pObj.name ?? "",
                         style: TextStyle(
                             color: TColor.primaryText,
                             fontSize: 16,
@@ -50,7 +56,7 @@ class FavoriteRow extends StatelessWidget {
                         height: 2,
                       ),
                       Text(
-                        "${pObj["qty"]}${pObj["unit"]}",
+                        "${pObj.unitValue}${pObj.unitName}",
                         style: TextStyle(
                             color: TColor.secondaryText,
                             fontSize: 14,
@@ -64,7 +70,7 @@ class FavoriteRow extends StatelessWidget {
                 ),
 
                 Text(
-                  pObj["price"],
+                  "\$${pObj.offerPrice ?? pObj.price}",
                   style: TextStyle(
                       color: TColor.primaryText,
                       fontSize: 18,

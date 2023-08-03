@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:online_groceries/view/login/welcome_view.dart';
 
 import '../common/color_extension.dart';
 import '../view_model/splash_view_model.dart';
@@ -23,7 +22,6 @@ class _SplashViewState extends State<SplashView> {
     splashVM.loadView();
     
   }
-
 
   @override
   Widget build(BuildContext context) {

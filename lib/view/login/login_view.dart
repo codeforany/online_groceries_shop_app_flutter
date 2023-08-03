@@ -5,7 +5,6 @@ import 'package:online_groceries/view_model/login_view_model.dart';
 import '../../common/color_extension.dart';
 import '../../common_widget/line_textfield.dart';
 import '../../common_widget/round_button.dart';
-import '../main_tabview/main_tabview.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({super.key});

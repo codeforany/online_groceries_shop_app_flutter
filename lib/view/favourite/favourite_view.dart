@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/common_widget/round_button.dart';
 
 import '../../common/color_extension.dart';
-import '../../common_widget/cart_item_row.dart';
 import '../../common_widget/favourite_row.dart';
+import '../../view_model/favourite_view_model.dart';
 
 class FavoritesView extends StatefulWidget {
   const FavoritesView({super.key});
@@ -13,43 +14,8 @@ class FavoritesView extends StatefulWidget {
 }
 
 class _FavoritesViewState extends State<FavoritesView> {
-  List listArr = [
-    {
-      "name": "Sprite Can",
-      "icon": "assets/img/sprite_can.png",
-      "qty": "325",
-      "unit": "ml, Price",
-      "price": "\$1.49"
-    },
-    {
-      "name": "Diet Coke",
-      "icon": "assets/img/diet_coke.png",
-      "qty": "355",
-      "unit": "ml, Price",
-      "price": "\$1.99"
-    },
-    {
-      "name": "Apple & Grape Juice",
-      "icon": "assets/img/juice_apple_grape.png",
-      "qty": "2",
-      "unit": "L, Price",
-      "price": "\$15.99"
-    },
-    {
-      "name": "Coca Cola Can",
-      "icon": "assets/img/cocacola_can.png",
-      "qty": "325",
-      "unit": "ml, Price",
-      "price": "\$4.99"
-    },
-    {
-      "name": "Pepsi Can",
-      "icon": "assets/img/pepsi_can.png",
-      "qty": "325",
-      "unit": "ml, Price",
-      "price": "\$4.49"
-    }
-  ];
+
+  final favVM = Get.find<FavoriteViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +38,13 @@ class _FavoritesViewState extends State<FavoritesView> {
         children: [
           ListView.separated(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              itemCount: listArr.length,
+              itemCount: favVM.listArr.length,
               separatorBuilder: (context, index) => const Divider(
                     color: Colors.black26,
                     height: 1,
                   ),
               itemBuilder: (context, index) {
-                var pObj = listArr[index] as Map? ?? {};
+                var pObj = favVM.listArr[index];
                 return FavoriteRow(
                   pObj: pObj,
                   onPressed: (){

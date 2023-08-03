@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:online_groceries/common/globs.dart';
 import 'package:online_groceries/common/service_call.dart';
 import 'package:online_groceries/view/main_tabview/main_tabview.dart';
+import 'package:online_groceries/view_model/splash_view_model.dart';
 
 class LoginViewModel extends GetxController {
   final txtEmail = TextEditingController().obs;
@@ -52,10 +53,11 @@ class LoginViewModel extends GetxController {
 
           Globs.udSet(payload, Globs.userPayload);
           Globs.udBoolSet(true, Globs.userLogin);
+
           
           Get.delete<LoginViewModel>();
-          Get.to( () => const MainTabView() );
-
+          Get.find<SplashViewModel>().goAfterLoginMainTab();
+          
         }else{
 
         }

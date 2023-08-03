@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:online_groceries/model/offer_product_model.dart';
 import 'package:online_groceries/view/home/product_details_view.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/category_cell.dart';
 import '../../common_widget/product_cell.dart';
 import '../../common_widget/section_view.dart';
+import '../../view_model/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,69 +19,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   TextEditingController txtSearch = TextEditingController();
 
-  List exclusiveOfferArr = [
-    {
-      "name": "Organic Bananas",
-      "icon": "assets/img/banana.png",
-      "qty": "7",
-      "unit": "pcs, Prices",
-      "price": "\$1.99"
-    },
-    {
-      "name": "Red Apple",
-      "icon": "assets/img/apple.png",
-      "qty": "1",
-      "unit": "kg, Prices",
-      "price": "\$4.99"
-    },
-  ];
+  final homeVM = Get.put(HomeViewModel());
 
-  List bestSellingArr = [
-    {
-      "name": "Bell Pepper Red",
-      "icon": "assets/img/bell_pepper_red.png",
-      "qty": "1",
-      "unit": "kg, Prices",
-      "price": "\$2.99"
-    },
-    {
-      "name": "Ginger",
-      "icon": "assets/img/ginger.png",
-      "qty": "250",
-      "unit": "gm, Prices",
-      "price": "\$3.99"
-    }
-  ];
-
-  List groceriesArr = [
-    {
-      "name": "Pulses",
-      "icon": "assets/img/pulses.png",
-      "color": Color(0xffF8A44C),
-    },
-    {
-      "name": "Rice",
-      "icon": "assets/img/rice.png",
-      "color": Color(0xff53B175),
-    }
-  ];
-
-  List listArr = [
-    {
-      "name": "Beef Bone",
-      "icon": "assets/img/beef_bone.png",
-      "qty": "1",
-      "unit": "kg, Prices",
-      "price": "\$4.99"
-    },
-    {
-      "name": "Broiler Chicken",
-      "icon": "assets/img/broiler_chicken.png",
-      "qty": "1",
-      "unit": "kg, Prices",
-      "price": "\$4.99"
-    }
-  ];
+  @override
+  void dispose() {
+    Get.delete<HomeViewModel>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,49 +129,56 @@ class _HomeViewState extends State<HomeView> {
               ),
               SizedBox(
                 height: 230,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: exclusiveOfferArr.length,
-                    itemBuilder: (context, index) {
-                      var pObj = exclusiveOfferArr[index] as Map? ?? {};
+                child: Obx(
+                  () => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      itemCount: homeVM.offerArr.length,
+                      itemBuilder: (context, index) {
+                        var pObj = homeVM.offerArr[index] ;
 
-                      return ProductCell(
-                        pObj: pObj,
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductDetails() ));
-                        },
-                        onCart: () {},
-                      );
-                    }),
+                        return ProductCell(
+                          pObj: pObj,
+                          onPressed: () async {
+                            await Get.to(() => ProductDetails(
+                                  pObj: pObj,
+                                ));
+
+                            homeVM.serviceCallHome();
+                          },
+                          onCart: () {},
+                        );
+                      }),
+                ),
               ),
               SectionView(
-                title: "Best Setting",
+                title: "Best Selling",
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 onPressed: () {},
               ),
               SizedBox(
                 height: 230,
-                child: ListView.builder(
+                child: Obx(
+                  () => ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: bestSellingArr.length,
+                    itemCount: homeVM.bestSellingArr.length,
                     itemBuilder: (context, index) {
-                      var pObj = bestSellingArr[index] as Map? ?? {};
+                      var pObj = homeVM.bestSellingArr[index];
 
                       return ProductCell(
                         pObj: pObj,
-                        onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ProductDetails()));
+                        onPressed: () async {
+                          await  Get.to(() => ProductDetails(
+                                  pObj: pObj,
+                                ));
+
+                          homeVM.serviceCallHome();
                         },
                         onCart: () {},
                       );
-                    }),
+                    }),),
               ),
               SectionView(
                 title: "Groceries",
@@ -234,43 +188,45 @@ class _HomeViewState extends State<HomeView> {
               ),
               SizedBox(
                 height: 100,
-                child: ListView.builder(
+                child: Obx(
+                  () =>  ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: groceriesArr.length,
+                    itemCount: homeVM.groceriesArr.length,
                     itemBuilder: (context, index) {
-                      var pObj = groceriesArr[index] as Map? ?? {};
+                      var pObj = homeVM.groceriesArr[index];
 
                       return CategoryCell(
                         pObj: pObj,
                         onPressed: () {},
                       );
-                    }),
+                    }),),
               ),
               const SizedBox(
                 height: 15,
               ),
               SizedBox(
                 height: 230,
-                child: ListView.builder(
+                child: Obx(
+                  () => ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: listArr.length,
+                    itemCount: homeVM.listArr.length,
                     itemBuilder: (context, index) {
-                      var pObj = listArr[index] as Map? ?? {};
+                      var pObj = homeVM.listArr[index] ;
 
                       return ProductCell(
                         pObj: pObj,
-                        onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ProductDetails()));
-                        },
+                        onPressed: () async {
+                            await Get.to(() => ProductDetails(
+                                  pObj: pObj,
+                                ));
+
+                            homeVM.serviceCallHome();
+                          },
                         onCart: () {},
                       );
-                    }),
+                    }),),
               ),
               const SizedBox(
                 height: 20,

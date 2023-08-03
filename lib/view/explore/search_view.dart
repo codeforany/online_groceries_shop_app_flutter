@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_groceries/common_widget/product_cell.dart';
 
 import '../../common/color_extension.dart';
+import '../../model/offer_product_model.dart';
 import 'filter_view.dart';
 
 class SearchView extends StatefulWidget {
@@ -143,7 +144,27 @@ class _SearchViewState extends State<SearchView> {
               itemBuilder: ((context, index) {
                 var pObj = searchArr[index] as Map? ?? {};
                 return ProductCell(
-                  pObj: pObj,
+                  pObj: OfferProductModel.fromJson(
+              {
+                "offer_price": 2.49,
+                "start_date": "2023-07-30T18:30:00.000Z",
+                "end_date": "2023-08-29T18:30:00.000Z",
+                "prod_id": 5,
+                "cat_id": 1,
+                "brand_id": 1,
+                "type_id": 1,
+                "name": "Organic Banana",
+                "detail":
+                    "banana, fruit of the genus Musa, of the family Musaceae, one of the most important fruit crops of the world. The banana is grown in the tropics, and, though it is most widely consumed in those regions, it is valued worldwide for its flavour, nutritional value, and availability throughout the year",
+                "unit_name": "pcs",
+                "unit_value": "7",
+                "nutrition_weight": "200g",
+                "price": 2.99,
+                "image": "product/202307310947354735xuruflIucc.png",
+                "cat_name": "Frash Fruits & Vegetable",
+                "type_name": "Pulses"
+              },
+            ),
                   margin: 0,
                   weight: double.maxFinite,
                   onPressed: () {},

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/view/home/home_view.dart';
 
 import '../../common/color_extension.dart';
+import '../../view_model/favourite_view_model.dart';
 import '../account/account_view.dart';
 import '../explore/explore_view.dart';
 import '../favourite/favourite_view.dart';
@@ -19,14 +21,20 @@ class _MainTabViewState extends State<MainTabView>
     with SingleTickerProviderStateMixin {
   TabController? controller;
   int selectTab = 0;
+  final favVM = Get.put(FavoriteViewModel());
 
   @override
   void initState() {
     super.initState();
+    
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     controller = TabController(length: 5, vsync: this);
     controller?.addListener(() {
       selectTab = controller?.index ?? 0;
+
+      if(selectTab == 3) {
+        favVM.serviceCalList();
+      }
       setState(() {});
     });
   }

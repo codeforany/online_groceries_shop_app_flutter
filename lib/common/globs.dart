@@ -80,12 +80,16 @@ class Globs {
 }
 
 class SVKey {
-  static const mainUrl = "http://192.168.1.2:3001";
+  static const mainUrl = "http://localhost:3001";
   static const baseUrl = '$mainUrl/api/app/';
   static const nodeUrl = mainUrl;
 
   static const svLogin = '${baseUrl}login';
   static const svSignUp = '${baseUrl}sign_up';
+  static const svHome = '${baseUrl}home';
+  static const svProductDetail = '${baseUrl}product_detail';
+  static const svAddRemoveFavorite = '${baseUrl}add_remove_favorite';
+  static const svFavorite = '${baseUrl}favorite_list';
 
 }
 
