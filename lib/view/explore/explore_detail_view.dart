@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/common_widget/product_cell.dart';
-import 'package:online_groceries/model/offer_product_model.dart';
 
 import '../../common/color_extension.dart';
+import '../../model/explore_category_model.dart';
+import '../../view_model/cart_view_model.dart';
+import '../../view_model/explore_item_view_model.dart';
+import '../home/product_details_view.dart';
 import 'filter_view.dart';
 
 class ExploreDetailView extends StatefulWidget {
-  final Map eObj;
+  final ExploreCategoryModel eObj;
   const ExploreDetailView({super.key, required this.eObj});
 
   @override
@@ -14,50 +18,19 @@ class ExploreDetailView extends StatefulWidget {
 }
 
 class _ExploreDetailViewState extends State<ExploreDetailView> {
-  List listArr = [
-    {
-      "name": "Diet Coke",
-      "icon": "assets/img/diet_coke.png",
-      "qty": "355",
-      "unit": "ml, Price",
-      "price": "\$1.99"
-    },
-    {
-      "name": "Sprite Can",
-      "icon": "assets/img/sprite_can.png",
-      "qty": "325",
-      "unit": "ml, Price",
-      "price": "\$1.49"
-    },
-    {
-      "name": "Apple & Grape Juice",
-      "icon": "assets/img/juice_apple_grape.png",
-      "qty": "2",
-      "unit": "L, Price",
-      "price": "\$15.99"
-    },
-    {
-      "name": "Orange Juice",
-      "icon": "assets/img/orenge_juice.png",
-      "qty": "2",
-      "unit": "L, Price",
-      "price": "\$15.49"
-    },
-    {
-      "name": "Coca Cola Can",
-      "icon": "assets/img/cocacola_can.png",
-      "qty": "325",
-      "unit": "ml, Price",
-      "price": "\$4.99"
-    },
-    {
-      "name": "Pepsi Can",
-      "icon": "assets/img/pepsi_can.png",
-      "qty": "325",
-      "unit": "ml, Price",
-      "price": "\$4.49"
-    }
-  ];
+  late ExploreItemViewMode listVM;
+
+  @override
+  void initState() {
+    super.initState();
+    listVM = Get.put(ExploreItemViewMode(widget.eObj));
+  }
+
+  @override
+  void dispose() {
+    Get.delete<ExploreItemViewMode>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,51 +64,40 @@ class _ExploreDetailViewState extends State<ExploreDetailView> {
               )),
         ],
         title: Text(
-          widget.eObj["name"].toString(),
+          widget.eObj.catName ?? "",
           style: TextStyle(
               color: TColor.primaryText,
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.75,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15),
-        itemCount: listArr.length,
-        itemBuilder: ((context, index) {
-          var pObj = listArr[index] as Map? ?? {};
-          return ProductCell(
-            pObj: OfferProductModel.fromJson(
-              {
-                "offer_price": 2.49,
-                "start_date": "2023-07-30T18:30:00.000Z",
-                "end_date": "2023-08-29T18:30:00.000Z",
-                "prod_id": 5,
-                "cat_id": 1,
-                "brand_id": 1,
-                "type_id": 1,
-                "name": "Organic Banana",
-                "detail":
-                    "banana, fruit of the genus Musa, of the family Musaceae, one of the most important fruit crops of the world. The banana is grown in the tropics, and, though it is most widely consumed in those regions, it is valued worldwide for its flavour, nutritional value, and availability throughout the year",
-                "unit_name": "pcs",
-                "unit_value": "7",
-                "nutrition_weight": "200g",
-                "price": 2.99,
-                "image": "product/202307310947354735xuruflIucc.png",
-                "cat_name": "Frash Fruits & Vegetable",
-                "type_name": "Pulses"
+      body: Obx(
+        () => GridView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.75,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15),
+          itemCount: listVM.listArr.length,
+          itemBuilder: ((context, index) {
+            var pObj = listVM.listArr[index];
+            return ProductCell(
+              pObj: pObj,
+              margin: 0,
+              weight: double.maxFinite,
+              onPressed: () async {
+                await Get.to(() => ProductDetails(
+                      pObj: pObj,
+                    ));
+                listVM.serviceCallList();
               },
-            ),
-            margin: 0,
-            weight: double.maxFinite,
-            onPressed: () {},
-            onCart: () {},
-          );
-        }),
+              onCart: () {
+                CartViewModel.serviceCallAddToCart(pObj.prodId ?? 0, 1, () {});
+              },
+            );
+          }),
+        ),
       ),
     );
   }

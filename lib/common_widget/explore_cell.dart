@@ -1,15 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:online_groceries/common/color_extension.dart';
 
+import '../model/explore_category_model.dart';
+
 class ExploreCell extends StatelessWidget {
-  final Map pObj;
+  final ExploreCategoryModel pObj;
   final VoidCallback onPressed;
 
   const ExploreCell({super.key, required this.pObj, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    var color = (pObj["color"] as Color? ?? TColor.primary);
+    
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(15),
@@ -18,8 +21,8 @@ class ExploreCell extends StatelessWidget {
         
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          border: Border.all(color: color, width: 1 ),
-          color: color.withOpacity(0.25),
+          border: Border.all(color: pObj.color ?? TColor.primary , width: 1 ),
+          color: (pObj.color ?? TColor.primary).withOpacity(0.25),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
@@ -29,12 +32,18 @@ class ExploreCell extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  pObj["icon"],
+                CachedNetworkImage(
+                  imageUrl: pObj.image ?? "",
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                   width: 120,
                   height: 90,
                   fit: BoxFit.contain,
                 ),
+                
+                
                 
               ],
             ),
@@ -42,7 +51,7 @@ class ExploreCell extends StatelessWidget {
            const Spacer(),
 
             Text(
-              pObj["name"],
+              pObj.catName ?? "",
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: TColor.primaryText,

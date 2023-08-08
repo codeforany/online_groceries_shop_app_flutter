@@ -7,6 +7,7 @@ import '../../common/color_extension.dart';
 import '../../common_widget/category_cell.dart';
 import '../../common_widget/product_cell.dart';
 import '../../common_widget/section_view.dart';
+import '../../view_model/cart_view_model.dart';
 import '../../view_model/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -83,7 +84,7 @@ class _HomeViewState extends State<HomeView> {
                   child: TextField(
                     controller: txtSearch,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 16),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(13.0),
                         child: Image.asset(
@@ -146,7 +147,11 @@ class _HomeViewState extends State<HomeView> {
 
                             homeVM.serviceCallHome();
                           },
-                          onCart: () {},
+                          onCart: () {
+                            CartViewModel.serviceCallAddToCart( pObj.prodId ?? 0  , 1, () {
+
+                             });
+                          },
                         );
                       }),
                 ),
@@ -176,7 +181,10 @@ class _HomeViewState extends State<HomeView> {
 
                           homeVM.serviceCallHome();
                         },
-                        onCart: () {},
+                        onCart: () {
+                          CartViewModel.serviceCallAddToCart(
+                                pObj.prodId ?? 0, 1, () {});
+                        },
                       );
                     }),),
               ),
@@ -224,7 +232,10 @@ class _HomeViewState extends State<HomeView> {
 
                             homeVM.serviceCallHome();
                           },
-                        onCart: () {},
+                        onCart: () {
+                          CartViewModel.serviceCallAddToCart(
+                                pObj.prodId ?? 0, 1, () {});
+                        },
                       );
                     }),),
               ),

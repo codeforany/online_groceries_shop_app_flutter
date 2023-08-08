@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/view/explore/search_view.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/explore_cell.dart';
+import '../../view_model/explore_view_model.dart';
 import 'explore_detail_view.dart';
 
 class ExploreView extends StatefulWidget {
@@ -15,38 +17,13 @@ class ExploreView extends StatefulWidget {
 class _ExploreViewState extends State<ExploreView> {
   TextEditingController txtSearch = TextEditingController();
 
-  List findProductArr = [
-    {
-      "name": "Frash Fruits & Vegetable",
-      "icon": "assets/img/frash_fruits.png",
-      "color": const Color(0xff53B175),
-    },
-    {
-      "name": "Cooking Oil & Ghee",
-      "icon": "assets/img/cooking_oil.png",
-      "color": const Color(0xffF8A44C),
-    },
-    {
-      "name": "Meat & Fish",
-      "icon": "assets/img/meat_fish.png",
-      "color": const Color(0xffF7A593),
-    },
-    {
-      "name": "Bakery & Snacks",
-      "icon": "assets/img/bakery_snacks.png",
-      "color": const Color(0xffD3B0E0),
-    },
-    {
-      "name": "Dairy & Eggs",
-      "icon": "assets/img/dairy_eggs.png",
-      "color": const Color(0xFFFDE598),
-    },
-    {
-      "name": "Beverages",
-      "icon": "assets/img/beverages.png",
-      "color": const Color(0xffB7DFF5),
-    }
-  ];
+  final exploreVM = Get.put(ExploreViewModel());
+
+  @override
+  void dispose() {
+    Get.delete<ExploreViewModel>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,29 +89,32 @@ class _ExploreViewState extends State<ExploreView> {
             height: 15,
           ),
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.95,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15),
-              itemCount: findProductArr.length,
-              itemBuilder: ((context, index) {
-                var eObj = findProductArr[index] as Map? ?? {};
-                return ExploreCell(
-                  pObj: eObj,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ExploreDetailView(
-                                eObj: eObj,
-                              )),
-                    );
-                  },
-                );
-              }),
+            child: Obx(
+              () => GridView.builder(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.95,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15),
+                itemCount: exploreVM.listArr.length,
+                itemBuilder: ((context, index) {
+                  var eObj = exploreVM.listArr[index];
+                  return ExploreCell(
+                    pObj: eObj,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ExploreDetailView(
+                                  eObj: eObj,
+                                )),
+                      );
+                    },
+                  );
+                }),
+              ),
             ),
           )
         ],

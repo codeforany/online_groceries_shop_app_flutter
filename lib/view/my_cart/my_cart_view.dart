@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:online_groceries/common_widget/round_button.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/view/my_cart/checkout_view.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/cart_item_row.dart';
+import '../../view_model/cart_view_model.dart';
 
 class MyCartView extends StatefulWidget {
   const MyCartView({super.key});
@@ -13,36 +14,14 @@ class MyCartView extends StatefulWidget {
 }
 
 class _MyCartViewState extends State<MyCartView> {
-  List cartArr = [
-    {
-      "name": "Bell Pepper Red",
-      "icon": "assets/img/bell_pepper_red.png",
-      "qty": 1,
-      "unit": "1kg, Price",
-      "price": 2.99
-    },
-    {
-      "name": "Egg Chicken Red",
-      "icon": "assets/img/egg_chicken_red.png",
-      "qty": 1,
-      "unit": "4pcs, Price",
-      "price": 1.99
-    },
-    {
-      "name": "Organic Bananas",
-      "icon": "assets/img/banana.png",
-      "qty": 1,
-      "unit": "7pcs, Price",
-      "price": 1.99
-    },
-    {
-      "name": "Ginger",
-      "icon": "assets/img/ginger.png",
-      "qty": 1,
-      "unit": "250gm, Prices",
-      "price": 3.99
-    }
-  ];
+  final cartVM = Get.put(CartViewModel());
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Get.delete<CartViewModel>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,68 +42,93 @@ class _MyCartViewState extends State<MyCartView> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          ListView.separated(
+          Obx(() => ListView.separated(
               padding: const EdgeInsets.all(20.0),
-              itemCount: cartArr.length,
+              itemCount: cartVM.listArr.length,
               separatorBuilder: (context, index) => const Divider(
                     color: Colors.black26,
                     height: 1,
                   ),
               itemBuilder: (context, index) {
-                var pObj = cartArr[index] as Map? ?? {};
+                var cObj = cartVM.listArr[index];
                 return CartItemRow(
-                  pObj: pObj,
+                  cObj: cObj,
+                  didQtyAdd: () {
+                    cartVM.serviceCallUpdateCart(cObj, (cObj.qty ?? 0) + 1);
+                  },
+                  didQtySub: () {
+                    var qty = cObj.qty ?? 0;
+                    qty -= 1;
+
+                    if (qty < 0) {
+                      qty = 0;
+                    }
+                    cartVM.serviceCallUpdateCart(cObj, qty);
+                  },
+                  didDelete: () {
+                    cartVM.serviceCallRemoveCart(cObj);
+                  },
                 );
-              }),
+              })),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                MaterialButton(
-                  onPressed: () {
-                    showCheckout();
-                  },
-                  height: 60,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(19)),
-                  minWidth: double.maxFinite,
-                  elevation: 0.1,
-                  color: TColor.primary,
-                  child: Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Go to Checkout",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
+            child: Obx(
+              () => Column(
+                mainAxisAlignment: cartVM.listArr.isNotEmpty ? MainAxisAlignment.end :  MainAxisAlignment.center,
+                children: [
+                  cartVM.listArr.isNotEmpty
+                      ? MaterialButton(
+                          onPressed: () {
+                            showCheckout();
+                          },
+                          height: 60,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(19)),
+                          minWidth: double.maxFinite,
+                          elevation: 0.1,
+                          color: TColor.primary,
+                          child: Stack(
+                            alignment: Alignment.centerRight,
+                            children: [
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Go to Checkout",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
+                                child: Text(
+                                  "\$${cartVM.cartTotalPrice.value}",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black12,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 8),
-                        child: const Text(
-                          "\$10.96",
+                        )
+                      : Text(
+                          "Your Card is Empty",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600),
+                              color: TColor.primaryText,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700),
                         ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                ],
+              ),
             ),
           )
         ],
@@ -137,7 +141,6 @@ class _MyCartViewState extends State<MyCartView> {
         backgroundColor: Colors.transparent,
         isDismissible: false,
         context: context,
-        
         builder: (context) {
           return const CheckoutView();
         });

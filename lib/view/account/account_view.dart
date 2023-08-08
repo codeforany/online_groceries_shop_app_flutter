@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../common/color_extension.dart';
 import '../../common_widget/account_row.dart';
 import '../../view_model/splash_view_model.dart';
+import 'address_list_view.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({super.key});
@@ -13,7 +14,6 @@ class AccountView extends StatefulWidget {
 }
 
 class _AccountViewState extends State<AccountView> {
-
   final splashVM = Get.find<SplashViewModel>();
 
   @override
@@ -86,12 +86,17 @@ class _AccountViewState extends State<AccountView> {
               icon: "assets/img/a_my_detail.png",
               onPressed: () {},
             ),
-             AccountRow(
+            AccountRow(
               title: "Delivery Address",
               icon: "assets/img/a_delivery_address.png",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddressListView()));
+              },
             ),
-             AccountRow(
+            AccountRow(
               title: "Payment Methods",
               icon: "assets/img/paymenth_methods.png",
               onPressed: () {},
@@ -101,22 +106,21 @@ class _AccountViewState extends State<AccountView> {
               icon: "assets/img/a_promocode.png",
               onPressed: () {},
             ),
-             AccountRow(
+            AccountRow(
               title: "Notifications",
               icon: "assets/img/a_noitification.png",
               onPressed: () {},
             ),
-             AccountRow(
+            AccountRow(
               title: "Help",
               icon: "assets/img/a_help.png",
               onPressed: () {},
             ),
-             AccountRow(
+            AccountRow(
               title: "About",
               icon: "assets/img/a_about.png",
               onPressed: () {},
             ),
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -124,7 +128,6 @@ class _AccountViewState extends State<AccountView> {
                 children: [
                   MaterialButton(
                     onPressed: () {
-
                       splashVM.logout();
                     },
                     height: 60,
@@ -136,7 +139,7 @@ class _AccountViewState extends State<AccountView> {
                     child: Stack(
                       alignment: Alignment.centerLeft,
                       children: [
-                         Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
@@ -149,9 +152,12 @@ class _AccountViewState extends State<AccountView> {
                           ],
                         ),
                         Container(
-                          
-                          padding: const EdgeInsets.symmetric( horizontal: 20),
-                          child: Image.asset("assets/img/logout.png", width: 20, height: 20, ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Image.asset(
+                            "assets/img/logout.png",
+                            width: 20,
+                            height: 20,
+                          ),
                         )
                       ],
                     ),

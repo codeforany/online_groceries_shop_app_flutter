@@ -90,7 +90,19 @@ class SVKey {
   static const svProductDetail = '${baseUrl}product_detail';
   static const svAddRemoveFavorite = '${baseUrl}add_remove_favorite';
   static const svFavorite = '${baseUrl}favorite_list';
+  static const svExploreList = '${baseUrl}explore_category_list';
+  static const svExploreItemList = '${baseUrl}explore_category_items_list';
 
+  static const svAddToCart = '${baseUrl}add_to_cart';
+  static const svUpdateCart = '${baseUrl}update_cart';
+  static const svRemoveCart = '${baseUrl}remove_cart';
+  static const svCartList = '${baseUrl}cart_list';
+
+  static const svAddDeliveryAddress = '${baseUrl}add_delivery_address';
+  static const svUpdateDeliveryAddress = '${baseUrl}update_delivery_address';
+  static const svDeleteDeliveryAddress = '${baseUrl}delete_delivery_address';
+  static const svDeliveryAddress = '${baseUrl}delivery_address';
+  static const svMarkDefaultDeliveryAddress = '${baseUrl}mark_default_delivery_address';
 }
 
 class KKey {

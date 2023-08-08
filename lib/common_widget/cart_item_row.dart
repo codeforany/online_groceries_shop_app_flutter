@@ -1,10 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:online_groceries/common/color_extension.dart';
 
-class CartItemRow extends StatelessWidget {
-  final Map pObj;
+import '../model/cart_item_model.dart';
 
-  const CartItemRow({super.key, required this.pObj});
+class CartItemRow extends StatelessWidget {
+  final CartItemModel cObj;
+  final VoidCallback didDelete;
+  final VoidCallback didQtyAdd;
+  final VoidCallback didQtySub;
+  
+
+  const CartItemRow({super.key, required this.cObj, required this.didQtyAdd, required this.didQtySub, required this.didDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +27,17 @@ class CartItemRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  pObj["icon"],
-                  width: 80,
+                 CachedNetworkImage(
+                  imageUrl: cObj.image ?? "",
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                 width: 80,
                   height: 65,
                   fit: BoxFit.contain,
                 ),
+                
                 const SizedBox(
                   width: 15,
                 ),
@@ -37,7 +49,7 @@ class CartItemRow extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                pObj["name"],
+                                cObj.name ?? "",
                                 style: TextStyle(
                                     color: TColor.primaryText,
                                     fontSize: 16,
@@ -45,7 +57,7 @@ class CartItemRow extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: didDelete,
                               child: Image.asset(
                                 "assets/img/close.png",
                                 width: 15,
@@ -59,7 +71,7 @@ class CartItemRow extends StatelessWidget {
                           height: 2,
                         ),
                         Text(
-                          "${pObj["unit"]}",
+                         "${cObj.unitValue}${cObj.unitName} Price",
                           style: TextStyle(
                               color: TColor.secondaryText,
                               fontSize: 14,
@@ -72,7 +84,7 @@ class CartItemRow extends StatelessWidget {
                         Row(
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: didQtySub,
                               child: Container(
                                 width: 40,
                                 height: 40,
@@ -96,7 +108,7 @@ class CartItemRow extends StatelessWidget {
                               width: 15,
                             ),
                             Text(
-                              pObj["qty"].toString(),
+                              (cObj.qty ?? 0 ).toString(),
                               style: TextStyle(
                                   color: TColor.primaryText,
                                   fontSize: 16,
@@ -106,7 +118,7 @@ class CartItemRow extends StatelessWidget {
                               width: 15,
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: didQtyAdd,
                               child: Container(
                                 width: 40,
                                 height: 40,
@@ -128,7 +140,7 @@ class CartItemRow extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              "\$${pObj["price"]}",
+                              "\$${ (cObj.totalPrice ?? 0).toStringAsFixed(2) }",
                               style: TextStyle(
                                   color: TColor.primaryText,
                                   fontSize: 18,
