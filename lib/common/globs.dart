@@ -103,6 +103,8 @@ class SVKey {
   static const svDeleteDeliveryAddress = '${baseUrl}delete_delivery_address';
   static const svDeliveryAddress = '${baseUrl}delivery_address';
   static const svMarkDefaultDeliveryAddress = '${baseUrl}mark_default_delivery_address';
+
+  static const svPromoCodeList = '${baseUrl}promo_code_list';
 }
 
 class KKey {

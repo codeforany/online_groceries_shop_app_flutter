@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:online_groceries/view/account/promo_code_view.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/account_row.dart';
@@ -104,7 +105,12 @@ class _AccountViewState extends State<AccountView> {
             AccountRow(
               title: "Promo Code",
               icon: "assets/img/a_promocode.png",
-              onPressed: () {},
+              onPressed: () {
+                 Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PromoCodeView()));
+              },
             ),
             AccountRow(
               title: "Notifications",
