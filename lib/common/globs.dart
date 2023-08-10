@@ -102,6 +102,11 @@ class SVKey {
   static const svUpdateDeliveryAddress = '${baseUrl}update_delivery_address';
   static const svDeleteDeliveryAddress = '${baseUrl}delete_delivery_address';
   static const svDeliveryAddress = '${baseUrl}delivery_address';
+
+  static const svAddPaymentMethod = '${baseUrl}add_payment_method';
+  static const svRemovePaymentMethod = '${baseUrl}remove_payment_method';
+  static const svPaymentMethodList = '${baseUrl}payment_method';
+
   static const svMarkDefaultDeliveryAddress = '${baseUrl}mark_default_delivery_address';
 
   static const svPromoCodeList = '${baseUrl}promo_code_list';

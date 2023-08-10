@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:online_groceries/view/account/payment_method_view.dart';
 import 'package:online_groceries/view/account/promo_code_view.dart';
 
 import '../../common/color_extension.dart';
@@ -100,7 +101,10 @@ class _AccountViewState extends State<AccountView> {
             AccountRow(
               title: "Payment Methods",
               icon: "assets/img/paymenth_methods.png",
-              onPressed: () {},
+              onPressed: () {
+
+                Get.to(() => const PaymentMethodListView() );
+              },
             ),
             AccountRow(
               title: "Promo Code",

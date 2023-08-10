@@ -43,6 +43,7 @@
 - [Youtube Video Part-13: GetX State Management, MVVM, Add Delivery Address & List UI ](https://youtu.be/RIRNOurzFKo)
 - [Youtube Video Part-14: GetX State Management, MVVM, Address Management API Calling ](https://youtu.be/hoIuJmDvCfM)
 - [Youtube Video Part-15: GetX State Management, MVVM, Promo Code UI & List API Calling ](https://youtu.be/xe4CsGc_eXw)
+- [Youtube Video Part-16: GetX State Management, MVVM, Payment Methods with API Calling ](https://youtu.be/NDYczk5qwzM)
 
 - [Youtube Full Playlist: Online Grocery Shopping Node REST Api Playlist](https://www.youtube.com/playlist?list=PLzcRC7PA0xWQiIgIL526ZAxxVdSZMwx3l)
 
