@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:online_groceries/model/promo_code_model.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/promo_code_row.dart';
 import '../../view_model/promo_code_view_model.dart';
 
 class PromoCodeView extends StatefulWidget {
-  const PromoCodeView({super.key});
+  final Function(PromoCodeModel pObj)? didSelect;
+  const PromoCodeView({super.key, this.didSelect });
 
   @override
   State<PromoCodeView> createState() => _PromoCodeViewState();
@@ -62,9 +64,12 @@ class _PromoCodeViewState extends State<PromoCodeView> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             itemBuilder: (context, index) {
               var pObj = promoVM.listArr[index];
-              return  PromoCodeRow(pObj: pObj,);
-              
-              
+              return  PromoCodeRow(pObj: pObj, onTap: (){
+                  if(widget.didSelect != null) {
+                    widget.didSelect!(pObj);
+                    Get.back();
+                  }
+              });
             },
             separatorBuilder: (context, index) =>
                 const Divider(color: Colors.black12, height: 1),

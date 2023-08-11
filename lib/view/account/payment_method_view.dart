@@ -4,10 +4,12 @@ import 'package:online_groceries/common_widget/payment_method_row.dart';
 import 'package:online_groceries/view/account/add_payment_method_view.dart';
 
 import '../../common/color_extension.dart';
+import '../../model/payment_model.dart';
 import '../../view_model/payment_view_model.dart';
 
 class PaymentMethodListView extends StatefulWidget {
-  const PaymentMethodListView({super.key});
+  final Function(PaymentModel pObj)? didSelect;
+  const PaymentMethodListView({super.key, this.didSelect});
 
   @override
   State<PaymentMethodListView> createState() => _PaymentMethodListViewState();
@@ -69,6 +71,12 @@ class _PaymentMethodListViewState extends State<PaymentMethodListView> {
               var pObj = payVM.listArr[index];
               return PaymentMethodRow(
                 pObj: pObj,
+                onTap: (){
+                    if(widget.didSelect != null) {
+                      widget.didSelect!(pObj);
+                      Get.back();
+                    }
+                },
                 didUpdateDone: () {
                   payVM.serviceCallList();
                 },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:online_groceries/model/address_model.dart';
 import 'package:online_groceries/view_model/addres_view_mode.dart';
 
 import '../../common/color_extension.dart';
@@ -7,13 +8,15 @@ import '../../common_widget/address_row.dart';
 import 'add_address_view.dart';
 
 class AddressListView extends StatefulWidget {
-  const AddressListView({super.key});
+  final Function(AddressModel aObj)? didSelect;
+  const AddressListView({super.key, this.didSelect });
 
   @override
   State<AddressListView> createState() => _AddressListViewState();
 }
 
 class _AddressListViewState extends State<AddressListView> {
+  
   final addressVM = Get.put(AddressViewModel());
 
   @override
@@ -68,7 +71,13 @@ class _AddressListViewState extends State<AddressListView> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             itemBuilder: (context, index) {
               var aObj = addressVM.listArr[index];
-              return  AddressRow(aObj: aObj, didUpdateDone: (){
+              return  AddressRow(aObj: aObj, onTap: (){
+                if(widget.didSelect != null) {
+                  
+                  widget.didSelect!(aObj);
+                  Get.back();
+                }
+              } , didUpdateDone: (){
 
                     addressVM.serviceCallList();
               }, );

@@ -16,6 +16,8 @@ class MyCartView extends StatefulWidget {
 class _MyCartViewState extends State<MyCartView> {
   final cartVM = Get.put(CartViewModel());
 
+  
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -140,6 +142,7 @@ class _MyCartViewState extends State<MyCartView> {
     showModalBottomSheet(
         backgroundColor: Colors.transparent,
         isDismissible: false,
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return const CheckoutView();
