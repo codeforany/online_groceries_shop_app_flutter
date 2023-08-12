@@ -45,6 +45,7 @@
 - [Youtube Video Part-15: GetX State Management, MVVM, Promo Code UI & List API Calling ](https://youtu.be/xe4CsGc_eXw)
 - [Youtube Video Part-16: GetX State Management, MVVM, Payment Methods with API Calling ](https://youtu.be/NDYczk5qwzM)
 - [Youtube Video Part-17: GetX State Management, MVVM, Order Placement & Promo Code with API Calling ](https://youtu.be/eO_4rc1dZao)
+- [Youtube Video Part-18: GetX State Management, MVVM, My Orders List with API Calling ](https://youtu.be/qcCUSG0bEYs)
 
 - [Youtube Full Playlist: Online Grocery Shopping Node REST Api Playlist](https://www.youtube.com/playlist?list=PLzcRC7PA0xWQiIgIL526ZAxxVdSZMwx3l)
 

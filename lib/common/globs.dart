@@ -111,6 +111,8 @@ class SVKey {
   static const svMarkDefaultDeliveryAddress = '${baseUrl}mark_default_delivery_address';
 
   static const svPromoCodeList = '${baseUrl}promo_code_list';
+  static const svMyOrders = '${baseUrl}my_order';
+  static const svMyOrdersDetail = '${baseUrl}my_order_detail';
 }
 
 class KKey {
