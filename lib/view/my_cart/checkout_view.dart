@@ -6,7 +6,6 @@ import 'package:online_groceries/common_widget/round_button.dart';
 import 'package:online_groceries/view/account/address_list_view.dart';
 import 'package:online_groceries/view/account/payment_method_view.dart';
 import 'package:online_groceries/view/account/promo_code_view.dart';
-import 'package:online_groceries/view/my_cart/order_accpet_view.dart';
 import 'package:online_groceries/view_model/cart_view_model.dart';
 
 import '../../common/color_extension.dart';

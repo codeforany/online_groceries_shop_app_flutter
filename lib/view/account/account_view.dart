@@ -7,7 +7,9 @@ import '../../common/color_extension.dart';
 import '../../common_widget/account_row.dart';
 import '../../view_model/splash_view_model.dart';
 import 'address_list_view.dart';
+import 'my_detail_view.dart';
 import 'my_order_view.dart';
+import 'notification_view.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({super.key});
@@ -80,7 +82,7 @@ class _AccountViewState extends State<AccountView> {
               height: 1,
             ),
             AccountRow(
-              title: "Orders",
+              title: "My Orders",
               icon: "assets/img/a_order.png",
               onPressed: () {
                 Get.to( () => const MyOrdersView() );
@@ -89,7 +91,10 @@ class _AccountViewState extends State<AccountView> {
             AccountRow(
               title: "My Details",
               icon: "assets/img/a_my_detail.png",
-              onPressed: () {},
+              onPressed: () {
+                Get.to( () => const MyDetailView() );
+                
+              },
             ),
             AccountRow(
               title: "Delivery Address",
@@ -122,7 +127,10 @@ class _AccountViewState extends State<AccountView> {
             AccountRow(
               title: "Notifications",
               icon: "assets/img/a_noitification.png",
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const NotificationListView() );
+                
+              },
             ),
             AccountRow(
               title: "Help",

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:online_groceries/view/login/select_location_view.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/line_textfield.dart';
+import '../../view_model/forgot_password_view_model.dart';
 
 class VerificationView extends StatefulWidget {
   const VerificationView({super.key});
@@ -12,7 +14,7 @@ class VerificationView extends StatefulWidget {
 }
 
 class _VerificationViewState extends State<VerificationView> {
-  TextEditingController txtOTP = TextEditingController();
+  final forgotVM = Get.put(ForgotPasswordViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class _VerificationViewState extends State<VerificationView> {
                   LineTextField(
                       title: "Code",
                       placeholder: " - - - -",
-                      controller: txtOTP),
+                      controller: forgotVM.txtResetCode.value),
                   SizedBox(
                     height: media.width * 0.3,
                   ),
@@ -69,7 +71,9 @@ class _VerificationViewState extends State<VerificationView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            forgotVM.serviceCallRequest(isResend: true);
+                          },
                           child: Text(
                             "Resend Code",
                             style: TextStyle(
@@ -80,11 +84,7 @@ class _VerificationViewState extends State<VerificationView> {
                       InkWell(
                         borderRadius: BorderRadius.circular(30),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const SelectLocationView()));
+                            forgotVM.serviceCallVerify();
                         },
                         child: Container(
                           width: 60,

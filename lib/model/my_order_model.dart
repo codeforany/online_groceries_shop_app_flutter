@@ -12,7 +12,17 @@ class MyOrderModel {
   int? status;
   String? createdDate;
   String? names;
+  String? userName;
+  String? phone;
+  String? address;
+  String? city;
+  String? state;
+  String? postalCode;
   List<String>? images;
+
+
+
+  
 
   MyOrderModel(
       {this.orderId,
@@ -44,6 +54,12 @@ class MyOrderModel {
     status = json['status'];
     createdDate = json['created_date'];
     names = json['names'];
+    userName = json['user_name'];
+    phone = json['phone'];
+    address = json['address'];
+    city = json['city'];
+    state = json['state'];
+    postalCode = json['postal_code'];
     images =  (json['images'] as String? ?? "" ).split(",") ;
   }
 
@@ -62,6 +78,12 @@ class MyOrderModel {
     data['status'] = status;
     data['created_date'] = createdDate;
     data['names'] = names;
+    data['user_name'] = userName;
+    data['phone'] = phone;
+    data['address'] = address;
+    data['city'] = city;
+    data['postal_code'] = postalCode;
+    data['state'] = state;
     data['images'] = images?.join(",") ?? "";
     return data;
   }

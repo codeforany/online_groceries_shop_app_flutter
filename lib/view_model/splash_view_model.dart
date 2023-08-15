@@ -25,6 +25,12 @@ class SplashViewModel extends GetxController {
     Get.to(() => const MainTabView() );
   }
 
+  void setData() {
+    userPayload.value =
+        UserPayloadModel.fromJson(Globs.udValue(Globs.userPayload));
+    
+  }
+
   void logout() {
     userPayload.value = UserPayloadModel();
     Globs.udBoolSet(false, Globs.userLogin);

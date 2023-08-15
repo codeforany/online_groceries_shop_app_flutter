@@ -113,6 +113,15 @@ class SVKey {
   static const svPromoCodeList = '${baseUrl}promo_code_list';
   static const svMyOrders = '${baseUrl}my_order';
   static const svMyOrdersDetail = '${baseUrl}my_order_detail';
+
+  static const svNotificationList = '${baseUrl}notification_list';
+  static const svNotificationReadAll = '${baseUrl}notification_read_all';
+
+  static const svUpdateProfile = '${baseUrl}update_profile';
+  static const svChangePassword = '${baseUrl}change_password';
+  static const svForgotPasswordRequest = '${baseUrl}forgot_password_request';
+  static const svForgotPasswordVerify = '${baseUrl}forgot_password_verify';
+  static const svForgotPasswordSetPassword = '${baseUrl}forgot_password_set_password';
 }
 
 class KKey {

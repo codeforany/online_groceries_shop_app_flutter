@@ -3,12 +3,17 @@ class ProductDetailModel {
   int? catId;
   int? brandId;
   int? typeId;
+  int? orderId;
+  int? qty;
   String? name;
+  String? image;
   String? detail;
   String? unitName;
   String? unitValue;
   String? nutritionWeight;
   double? price;
+  double? itemPrice;
+  double? totalPrice;
   String? createdDate;
   String? modifyDate;
   String? catName;
@@ -44,15 +49,20 @@ class ProductDetailModel {
 
   ProductDetailModel.fromJson(Map<String, dynamic> json) {
     prodId = json['prod_id'];
+    orderId = json['order_id'];
+    qty = json['qty'];
     catId = json['cat_id'];
     brandId = json['brand_id'];
     typeId = json['type_id'];
     name = json['name'];
+    image = json['image'];
     detail = json['detail'];
     unitName = json['unit_name'];
     unitValue = json['unit_value'];
     nutritionWeight = json['nutrition_weight'];
     price = json['price'];
+    itemPrice = json['item_price'];
+    totalPrice = json['total_price'];
     createdDate = json['created_date'];
     modifyDate = json['modify_date'];
     catName = json['cat_name'];
@@ -71,12 +81,17 @@ class ProductDetailModel {
     data['cat_id'] = catId;
     data['brand_id'] = brandId;
     data['type_id'] = typeId;
+    data['order_id'] = orderId;
+    data['qty'] = qty;
     data['name'] = name;
+    data['image'] = image;
     data['detail'] = detail;
     data['unit_name'] = unitName;
     data['unit_value'] = unitValue;
     data['nutrition_weight'] = nutritionWeight;
     data['price'] = price;
+    data['item_price'] = itemPrice;
+    data['total_price'] = totalPrice;
     data['created_date'] = createdDate;
     data['modify_date'] = modifyDate;
     data['cat_name'] = catName;

@@ -169,101 +169,102 @@ class MyOrderRow extends StatelessWidget {
     );
   }
 
-  String getOrderStatus(MyOrderModel mObj) {
-    //1: new, 2: order_accept, 3: order_delivered, 4: cancel, 5: order declined
-    switch (mObj.orderStatus) {
-      case 1:
-        return "Placed";
-      case 2:
-        return "Accepted";
-      case 3:
-        return "Delivered";
-      case 4:
-        return "Cancel";
-      case 5:
-        return "Declined";
-      default:
-        return "";
-    }
+}
+
+String getOrderStatus(MyOrderModel mObj) {
+  //1: new, 2: order_accept, 3: order_delivered, 4: cancel, 5: order declined
+  switch (mObj.orderStatus) {
+    case 1:
+      return "Placed";
+    case 2:
+      return "Accepted";
+    case 3:
+      return "Delivered";
+    case 4:
+      return "Cancel";
+    case 5:
+      return "Declined";
+    default:
+      return "";
   }
+}
 
-  String getDeliverType(MyOrderModel mObj) {
-    switch (mObj.deliverType) {
-      case 1:
-        return "Delivery";
-      case 2:
-        return "Collection";
-      default:
-        return "";
-    }
+String getDeliverType(MyOrderModel mObj) {
+  switch (mObj.deliverType) {
+    case 1:
+      return "Delivery";
+    case 2:
+      return "Collection";
+    default:
+      return "";
   }
+}
 
-  String getPaymentType(MyOrderModel mObj) {
-    switch (mObj.paymentType) {
-      case 1:
-        return "Cash On Delivery";
-      case 2:
-        return "Online Card Payment";
-      default:
-        return "";
-    }
+String getPaymentType(MyOrderModel mObj) {
+  switch (mObj.paymentType) {
+    case 1:
+      return "Cash On Delivery";
+    case 2:
+      return "Online Card Payment";
+    default:
+      return "";
   }
+}
 
-  String getPaymentStatus(MyOrderModel mObj) {
-    //1: waiting, 2: done, 3: fail, 4: refund
+String getPaymentStatus(MyOrderModel mObj) {
+  //1: waiting, 2: done, 3: fail, 4: refund
 
-    if (mObj.paymentType == 1) {
-      return "COD";
-    }
-    switch (mObj.paymentStatus) {
-      case 1:
-        return "Processing";
-      case 2:
-        return "Success";
-      case 3:
-        return "Fail";
-      case 4:
-        return "Refunded";
-      default:
-        return "";
-    }
+  if (mObj.paymentType == 1) {
+    return "COD";
   }
-
-  Color getPaymentStatusColor(MyOrderModel mObj) {
-    //1: waiting, 2: done, 3: fail, 4: refund
-
-    if (mObj.paymentType == 1) {
-      return Colors.orange;
-    }
-    switch (mObj.paymentStatus) {
-      case 1:
-        return Colors.blue;
-      case 2:
-        return Colors.green;
-      case 3:
-        return Colors.red;
-      case 4:
-        return Colors.green;
-      default:
-        return Colors.white;
-    }
+  switch (mObj.paymentStatus) {
+    case 1:
+      return "Processing";
+    case 2:
+      return "Success";
+    case 3:
+      return "Fail";
+    case 4:
+      return "Refunded";
+    default:
+      return "";
   }
+}
 
-  Color getOrderStatusColor(MyOrderModel mObj) {
-    //1: new, 2: order_accept, 3: order_delivered, 4: cancel, 5: order declined
-    switch (mObj.orderStatus) {
-      case 1:
-        return Colors.blue;
-      case 2:
-        return Colors.green;
-      case 3:
-        return Colors.green;
-      case 4:
-        return Colors.red;
-      case 5:
-        return Colors.red;
-      default:
-        return TColor.primary;
-    }
+Color getPaymentStatusColor(MyOrderModel mObj) {
+  //1: waiting, 2: done, 3: fail, 4: refund
+
+  if (mObj.paymentType == 1) {
+    return Colors.orange;
+  }
+  switch (mObj.paymentStatus) {
+    case 1:
+      return Colors.blue;
+    case 2:
+      return Colors.green;
+    case 3:
+      return Colors.red;
+    case 4:
+      return Colors.green;
+    default:
+      return Colors.white;
+  }
+}
+
+Color getOrderStatusColor(MyOrderModel mObj) {
+  //1: new, 2: order_accept, 3: order_delivered, 4: cancel, 5: order declined
+  switch (mObj.orderStatus) {
+    case 1:
+      return Colors.blue;
+    case 2:
+      return Colors.green;
+    case 3:
+      return Colors.green;
+    case 4:
+      return Colors.red;
+    case 5:
+      return Colors.red;
+    default:
+      return TColor.primary;
   }
 }
